@@ -2,13 +2,24 @@ import { useState } from "react";
 
 function App() {
   const [texto, setTexto] = useState("");
-  const [resultado, setResultado] = useState("");
+  const [resultado, setResultado] = useState<string[]>([]);
   const analisarTexto = () => {
-    if (texto.includes("Netflix")) {
-      setResultado("Encontramos Netflix");
-    } else {
-      setResultado("Nenhuma Assinatura Encontrada");
-    }
+    const palavrasChave = [
+      "netflix",
+      "spotify",
+      "amazon",
+      "prime",
+      "disney",
+      "hbo",
+    ];
+
+    const textoNormalizado = texto.toLowerCase();
+
+    const encontrados = palavrasChave.filter((palavra) =>
+    textoNormalizado.includes(palavra)
+    );
+
+    setResultado(encontrados);
   };
 
   return (
@@ -24,8 +35,15 @@ function App() {
       Analisar
     </button>
 
-      <p>{texto}</p>
-      <p>{resultado}</p>
+      {resultado.length === 0 ? (
+        <p>Nenhuma Assinatura Encontrada</p>
+      ) : (
+        <ul>
+          {resultado.map((item, index) =>(
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
