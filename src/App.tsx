@@ -2,21 +2,20 @@ import { useState } from "react";
 
 function App() {
   const [texto, setTexto] = useState("");
-  const [resultado, setResultado] = useState<string[]>([]);
+  const [resultado, setResultado] = useState<{nome: string; chave: string}[]>([]);
   const analisarTexto = () => {
-    const palavrasChave = [
-      "netflix",
-      "spotify",
-      "amazon",
-      "prime",
-      "disney",
-      "hbo",
+    const servicos = [
+      { nome: "NetFlix", chave: "netflix" },
+      { nome: "Spotify", chave: "spotify" },
+      { nome: "Amazon Prime", chave: "amazon prime" },
+      { nome: "Disney+", chave: "disney" },
+      { nome: "HBO Max", chave: "hbo max" },
     ];
 
     const textoNormalizado = texto.toLowerCase();
 
-    const encontrados = palavrasChave.filter((palavra) =>
-    textoNormalizado.includes(palavra)
+    const encontrados = servicos.filter((servico) =>
+    textoNormalizado.includes(servico.chave)
     );
 
     setResultado(encontrados);
@@ -40,7 +39,7 @@ function App() {
       ) : (
         <ul>
           {resultado.map((item, index) =>(
-            <li key={index}>{item}</li>
+            <li key={index}>{item.nome}</li>
           ))}
         </ul>
       )}
