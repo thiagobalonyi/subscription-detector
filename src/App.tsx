@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function App() {
   const [texto, setTexto] = useState("");
-  const [resultado, setResultado] = useState<{nome: string; chave: string}[]>([]);
+  const [resultado, setResultado] = useState<{nome: string; valor?: string}[]>([]);
   const analisarTexto = () => {
     const servicos = [
       { nome: "NetFlix", chave: "netflix" },
@@ -16,7 +16,16 @@ function App() {
 
     const encontrados = servicos.filter((servico) =>
     textoNormalizado.includes(servico.chave)
-    );
+    )
+    .map((servico) => {
+      const regex = /r\$\s?\d+[.,]?\d*/i;
+      const match = texto.match(regex);
+
+      return {
+        nome: servico.nome,
+        valor: match ? match[0] : undefined,
+      };
+    });
 
     setResultado(encontrados);
   };
@@ -39,7 +48,9 @@ function App() {
       ) : (
         <ul>
           {resultado.map((item, index) =>(
-            <li key={index}>{item.nome}</li>
+            <li key={index}>
+              {item.nome} {item.valor && `- ${item.valor}`}
+              </li>
           ))}
         </ul>
       )}
