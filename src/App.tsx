@@ -6,10 +6,19 @@ function App() {
   const servicos = [
   { nome: "Netflix", chave: "netflix" },
   { nome: "Spotify", chave: "spotify" },
-  { nome: "Amazon Prime", chave: "prime" },
+  { nome: "Amazon Prime", chave: "amazon" },
   { nome: "Disney+", chave: "disney" },
   { nome: "HBO Max", chave: "hbo" },
 ];
+
+const extrairNumero = (valor: string) => {
+  return Number(
+    valor
+      .replace("R$", "")
+      .replace(",",".")
+      .trim()
+  );
+};
 
   const analisarTexto = () => {
     const linhas = texto.split("\n");
@@ -33,7 +42,14 @@ function App() {
   });
 
     setResultado(resultados);
+
   };
+
+  const total = resultado.reduce((acc, item) => {
+      if (!item.valor) return acc;
+
+      return acc + extrairNumero(item.valor);
+    }, 0);
 
   return (
     <div style={{ padding: 20 }}>
@@ -59,6 +75,9 @@ function App() {
           ))}
         </ul>
       )}
+      <p>
+        Total mensal: R$ {total.toFixed(2)}
+      </p>
     </div>
   );
 }
