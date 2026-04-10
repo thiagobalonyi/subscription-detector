@@ -3,31 +3,36 @@ import { useState } from "react";
 function App() {
   const [texto, setTexto] = useState("");
   const [resultado, setResultado] = useState<{nome: string; valor?: string}[]>([]);
+  const servicos = [
+  { nome: "Netflix", chave: "netflix" },
+  { nome: "Spotify", chave: "spotify" },
+  { nome: "Amazon Prime", chave: "prime" },
+  { nome: "Disney+", chave: "disney" },
+  { nome: "HBO Max", chave: "hbo" },
+];
+
   const analisarTexto = () => {
-    const servicos = [
-      { nome: "NetFlix", chave: "netflix" },
-      { nome: "Spotify", chave: "spotify" },
-      { nome: "Amazon Prime", chave: "amazon prime" },
-      { nome: "Disney+", chave: "disney" },
-      { nome: "HBO Max", chave: "hbo max" },
-    ];
+    const linhas = texto.split("\n");
 
-    const textoNormalizado = texto.toLowerCase();
+    const resultados: { nome: string; valor?: string }[] = [];
 
-    const encontrados = servicos.filter((servico) =>
-    textoNormalizado.includes(servico.chave)
-    )
-    .map((servico) => {
-      const regex = /r\$\s?\d+[.,]?\d*/i;
-      const match = texto.match(regex);
+    linhas.forEach((linha) => {
+      const linhaLower = linha.toLowerCase ();
 
-      return {
-        nome: servico.nome,
-        valor: match ? match[0] : undefined,
-      };
+    servicos.forEach((servico) => {
+      if (linhaLower.includes(servico.chave)) {
+        const regex = /r\$\s?\d+[.,]?\d*/i;
+        const match = linha.match(regex);
+
+        resultados.push({
+          nome: servico.nome,
+          valor: match ? match[0] : undefined
+        });
+      }
     });
+  });
 
-    setResultado(encontrados);
+    setResultado(resultados);
   };
 
   return (
