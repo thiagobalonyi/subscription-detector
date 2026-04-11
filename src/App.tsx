@@ -56,27 +56,56 @@ const extrairNumero = (valor: string) => {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Teste useState</h1>
+      <h1>Detector de Assinaturas</h1>
 
-      <input
+    <input
+      placeholder="Cole aqui suas assinaturas..."
       value={texto}
       onChange={(e) => setTexto(e.target.value)}
-      />
+      style={{
+        padding: 10,
+        width: 300,
+        borderRadius: 6,
+        border: "1px solid #333",
+        marginRight: 10,
+      }}
+    />
 
-    <button onClick={analisarTexto}>
+    <button 
+      onClick={analisarTexto}
+      style={{
+        padding: "10px 16px",
+        borderRadius: 6,
+        backgroundColor: "#6c5ce7",
+        color: "#fff",
+        border: "none,",
+        cursor: "pointer",
+      }}
+    >
       Analisar
     </button>
 
       {resultado.length === 0 ? (
         <p>Nenhuma Assinatura Encontrada</p>
       ) : (
-        <ul>
+        <div style={{ marginTop: 20 }}>
           {resultado.map((item, index) =>(
-            <li key={index}>
-              {item.nome} {item.valor && `- ${item.valor}`}
-              </li>
+            <div 
+              key={index}
+              style={{
+                display:"flex",
+                justifyContent: "space-between",
+                padding: "12px 16px",
+                marginBottom: 10,
+                borderRadius: 8,
+                backgroundColor: "#1e1e2f",
+              }}
+              >
+                <span>{item.nome}</span>
+                <strong>{item.valor}</strong>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
       <p>
         Total mensal: R$ {total.toFixed(2)}
