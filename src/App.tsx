@@ -4,11 +4,11 @@ function App() {
   const [texto, setTexto] = useState("");
   const [resultado, setResultado] = useState<{nome: string; valor?: string}[]>([]);
   const servicos = [
-  { nome: "Netflix", chave: "netflix" },
-  { nome: "Spotify", chave: "spotify" },
-  { nome: "Amazon Prime", chave: "amazon" },
-  { nome: "Disney+", chave: "disney" },
-  { nome: "HBO Max", chave: "hbo" },
+  { nome: "Netflix", chaves: ["netflix"] },
+  { nome: "Spotify", chaves: ["spotify"] },
+  { nome: "Amazon Prime", chaves: ["amazon", "prime"] },
+  { nome: "Disney+", chaves: ["disney"] },
+  { nome: "HBO Max", chaves: ["hbo"] },
 ];
 
 const extrairNumero = (valor: string) => {
@@ -29,7 +29,10 @@ const extrairNumero = (valor: string) => {
       const linhaLower = linha.toLowerCase ();
 
     servicos.forEach((servico) => {
-      if (linhaLower.includes(servico.chave)) {
+      if (servico.chaves.some((chave) => 
+      linhaLower.includes(chave)
+    )
+  ) {
         const regex = /r\$\s?\d+[.,]?\d*/i;
         const match = linha.match(regex);
 
