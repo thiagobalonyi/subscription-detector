@@ -54,6 +54,11 @@ const extrairNumero = (valor: string) => {
       return acc + extrairNumero(item.valor);
     }, 0);
 
+    const removerItem = (index: number) => {
+      const novaLista = resultado.filter((_, i) => i !== index);
+      setResultado(novaLista);
+    };
+
   return (
     <div style={{ padding: 20 }}>
       <h1>Detector de Assinaturas</h1>
@@ -101,8 +106,22 @@ const extrairNumero = (valor: string) => {
                 backgroundColor: "#1e1e2f",
               }}
               >
+              <div style={{display: "flex", gap: 10, alignItems: "center"}}>
                 <span>{item.nome}</span>
                 <strong>{item.valor}</strong>
+              </div>
+
+              <button onClick={() => removerItem(index)} style={{
+                background: "transparent",
+                border: "none",
+                color: "#ff6b6b",
+                cursor: "pointer",
+                fontSize: 16,
+              }}
+            >
+                ❌
+              </button>
+
             </div>
           ))}
         </div>
