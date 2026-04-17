@@ -20,6 +20,11 @@ const extrairNumero = (valor: string) => {
   );
 };
 
+const limparTudo = () => {
+    setResultado([]);
+    localStorage.removeItem("assinaturas");
+  };
+
   const analisarTexto = () => {
     const linhas = texto.split("\n");
 
@@ -110,6 +115,22 @@ const extrairNumero = (valor: string) => {
       <p>
         Total mensal: R$ {total.toFixed(2)}
       </p>
+
+      <button
+      onClick={limparTudo}
+      style={{
+        marginTop: 20,
+        padding: "10px 16px",
+        borderRadius: 6,
+        backgroundColor: "#ff6b6b",
+        color: "#fff",
+        border: "none",
+        cursor: "pointer",
+      }}
+      >
+        Limpar Tudo
+      </button>
+
     </div>
   );
 }
