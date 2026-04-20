@@ -25,6 +25,16 @@ const limparTudo = () => {
     localStorage.removeItem("assinaturas");
   };
 
+  const getCorValor = (valor?: string) => {
+    if (!valor) return "#fff";
+
+    const numero = extrairNumero(valor);
+
+    if (numero >= 30) return "#ff6b6b" // caro
+    if (numero >= 15) return "#feca57" // médio
+    return "#1dd1a1" //barato
+  }
+
   const analisarTexto = () => {
     const linhas = texto.split("\n");
 
@@ -38,12 +48,12 @@ const limparTudo = () => {
       linhaLower.includes(chave)
     )
   ) {
-        const regex = /r\$\s?\d+[.,]?\d*/i;
+        const regex = new RegExp(`(${servico.chaves.join("|")}).*?(r\\$\\s?\\d+[.,]?\\d*)`, "i");
         const match = linha.match(regex);
 
         resultados.push({
           nome: servico.nome,
-          valor: match ? match[0] : undefined
+          valor: match ? match[2] : undefined
         });
       }
     });
@@ -88,7 +98,7 @@ const limparTudo = () => {
         borderRadius: 6,
         backgroundColor: "#6c5ce7",
         color: "#fff",
-        border: "none,",
+        border: "none",
         cursor: "pointer",
       }}
     >
@@ -113,7 +123,9 @@ const limparTudo = () => {
               >
               <div style={{display: "flex", gap: 10, alignItems: "center"}}>
                 <span>{item.nome}</span>
-                <strong>{item.valor}</strong>
+
+                <strong style={{ color: getCorValor(item.valor) }}>
+                {item.valor}</strong>
               </div>
 
               <button onClick={() => removerItem(index)} style={{
